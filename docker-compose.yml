@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: apistore-backend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8088:8080"
+    environment:
+      - DB_HOST=postgres_db
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=5432
+    depends_on:
+      - postgres_db
+    networks:
+      - apistore-net
+
+  # Serviço do Banco de Dados PostgreSQL
+  postgres_db:
+    image: postgres:15-alpine
+    container_name: apistore-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - /mnt/data/apistore/postgres_data:/var/lib/postgresql/data
+    networks:
+      - apistore-net
+
+networks:
+  apistore-net:
+    driver: bridge

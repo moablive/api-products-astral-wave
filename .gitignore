@@ -1,0 +1,36 @@
+# Binários compilados e executáveis
+# Ignore o arquivo executável que o Go gera. O nome pode variar.
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+apistore # Adicione o nome do seu executável aqui para garantir
+
+# Arquivos de ambiente
+# NUNCA envie arquivos .env para o repositório. Eles contêm senhas e segredos.
+.env
+.env.*
+!.env.example
+
+# Dependências baixadas (Vendor)
+# A pasta vendor pode ser recriada com 'go mod vendor'
+vendor/
+
+# Arquivos de log
+*.log
+
+# Arquivos de ferramentas de teste e coverage
+coverage.out
+*.prof
+
+# Diretórios de IDEs e editores de código
+# Configurações específicas do seu ambiente local não devem ir para o repositório
+.vscode/
+.idea/
+*.swp
+
+# Arquivos de sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
