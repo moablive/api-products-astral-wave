@@ -1,3 +1,5 @@
+// main.go
+
 package main
 
 import (
@@ -7,6 +9,7 @@ import (
 	"os"
 
 	"apistore/handlers"
+	"apistore/middleware"
 	"apistore/router"
 	"apistore/store"
 
@@ -15,7 +18,6 @@ import (
 
 func main() {
 
-	// 1. Carrega o .env APENAS se não estiver em ambiente de produção
 	if os.Getenv("GO_ENV") != "production" {
 		err := godotenv.Load()
 		if err != nil {
@@ -39,5 +41,6 @@ func main() {
 	porta := ":8080"
 
 	fmt.Printf("Servidor na porta %s\n", porta)
-	log.Fatal(http.ListenAndServe(porta, r))
+
+	log.Fatal(http.ListenAndServe(porta, middleware.CorsMiddleware(r)))
 }
